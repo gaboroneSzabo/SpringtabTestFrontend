@@ -48,7 +48,7 @@ function SimpleTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(n => {
+          {props.data.map(n => {
             return (
               <TableRow key={n.id}>
                 <TableCell component="th" scope="row">

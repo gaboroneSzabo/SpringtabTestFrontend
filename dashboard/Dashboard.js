@@ -17,6 +17,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 import SimpleLineChart from './SimpleLineChart';
 import SimpleTable from './SimpleTable';
+import DataService from '../DataService';
 
 const drawerWidth = 240;
 
@@ -102,6 +103,10 @@ class Dashboard extends React.Component {
     open: true,
   };
 
+  ds = new DataService();
+  chartData = this.ds.getChartData();
+  tableData = this.ds.getTableData();
+
   handleDrawerOpen = () => {
     this.setState({ open: true });
   };
@@ -171,13 +176,13 @@ class Dashboard extends React.Component {
             Orders
           </Typography>
           <Typography component="div" className={classes.chartContainer}>
-            <SimpleLineChart />
+            <SimpleLineChart data={this.chartData}/>
           </Typography>
           <Typography variant="h4" gutterBottom component="h2">
             Products
           </Typography>
           <div className={classes.tableContainer}>
-            <SimpleTable />
+            <SimpleTable data={this.tableData} />
           </div>
         </main>
       </div>

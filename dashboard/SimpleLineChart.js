@@ -18,11 +18,11 @@ const data = [
   { name: 'Sun', Visits: 4490, Orders: 4300 },
 ];
 
-function SimpleLineChart() {
+function SimpleLineChart(props) {
   return (
     // 99% per https://github.com/recharts/recharts/issues/172
     <ResponsiveContainer width="99%" height={320}>
-      <LineChart data={data}>
+      <LineChart data={props.data}>
         <XAxis dataKey="name" />
         <YAxis />
         <CartesianGrid vertical={false} strokeDasharray="3 3" />
