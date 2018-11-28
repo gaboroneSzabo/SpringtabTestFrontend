@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default class DataService {
 
     chartData = [
@@ -10,7 +12,7 @@ export default class DataService {
         { name: 'Sun', Visits: 4490, Orders: 10000 },
       ];
 
-      id;
+      id = 0;
 
       createData = (name, calories, fat, carbs, protein) => {
         this.id += 1;
@@ -27,10 +29,18 @@ export default class DataService {
       ];
 
       getChartData = () => {
+          this.testGet();
           return this.chartData;
       }
 
       getTableData = () => {
           return this.tableData;
       }
+
+      testGet = () => {
+          axios.get("https://jsonplaceholder.typicode.com/posts").
+          then(response => console.log(response));
+      }
+
+
 }

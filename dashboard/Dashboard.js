@@ -18,6 +18,8 @@ import { mainListItems, secondaryListItems } from './listItems';
 import SimpleLineChart from './SimpleLineChart';
 import SimpleTable from './SimpleTable';
 import DataService from '../DataService';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
 
 const drawerWidth = 240;
 
@@ -28,6 +30,7 @@ const styles = theme => ({
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
   },
+
   toolbarIcon: {
     display: 'flex',
     alignItems: 'center',
@@ -119,7 +122,9 @@ class Dashboard extends React.Component {
     const { classes } = this.props;
 
     return (
+      <Router>
       <div className={classes.root}>
+      
         <CssBaseline />
         <AppBar
           position="absolute"
@@ -170,24 +175,43 @@ class Dashboard extends React.Component {
           <Divider />
           <List>{secondaryListItems}</List>
         </Drawer>
-        <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Typography variant="h4" gutterBottom component="h2">
-            Orders
-          </Typography>
-          <Typography component="div" className={classes.chartContainer}>
-            <SimpleLineChart data={this.chartData}/>
-          </Typography>
-          <Typography variant="h4" gutterBottom component="h2">
-            Products
-          </Typography>
-          <div className={classes.tableContainer}>
-            <SimpleTable data={this.tableData} />
-          </div>
-        </main>
+        
+        <div className="route">
+          <Route exact path="/" component={()=> {return EmptyComponent("Dashboard Component")}}></Route>
+          <Route  path="/Orders" component={()=> {return EmptyComponent("Orders Component")}}></Route>
+          <Route  path="/Customers" component={()=> {return Default(classes, this.chartData, this.tableData)}}></Route>
+          <Route  path="/Reports" component={()=> {return EmptyComponent("Reports Component")}}></Route>
+          <Route  path="/Integrations" component={()=> {return EmptyComponent("Integrations Component")}}></Route>
+        </div>
+
       </div>
+      </Router>
     );
   }
+}
+
+function EmptyComponent(name) {
+
+  return (<h1>{name}</h1>);
+}
+
+function Default(classes, chartData, tableData) {
+  return (
+    <main className={classes.content}>
+    <div className={classes.appBarSpacer} />
+    <Typography variant="h4" gutterBottom component="h2">
+      Orders
+    </Typography>
+    <Typography component="div" className={classes.chartContainer}>
+      <SimpleLineChart data={chartData}/>
+    </Typography>
+    <Typography variant="h4" gutterBottom component="h2">
+      Products
+    </Typography>
+    <div className={classes.tableContainer}>
+    <SimpleTable data={tableData} />
+    </div>
+    </main>);
 }
 
 Dashboard.propTypes = {
